@@ -370,38 +370,38 @@ model.load_weights(COCO_WEIGHTS_PATH, by_name=True, exclude=[
 class MaskRCNN():
     def train(self, train_dataset, val_dataset, learning_rate, epochs, layers,
               augmentation=None, custom_callbacks=None, no_augmentation_sources=None):
-        """Train the model.
-        train_dataset, val_dataset: Training and validation Dataset objects.
-        learning_rate: The learning rate to train with
-        epochs: Number of training epochs. Note that previous training epochs
-                are considered to be done alreay, so this actually determines
-                the epochs to train in total rather than in this particaular
-                call.
-        layers: Allows selecting wich layers to train. It can be:
-            - A regular expression to match layer names to train
-            - One of these predefined values:
-              heads: The RPN, classifier and mask heads of the network
-              all: All the layers
-              3+: Train Resnet stage 3 and up
-              4+: Train Resnet stage 4 and up
-              5+: Train Resnet stage 5 and up
-        augmentation: Optional. An imgaug (https://github.com/aleju/imgaug)
-            augmentation. For example, passing imgaug.augmenters.Fliplr(0.5)
-            flips images right/left 50% of the time. You can pass complex
-            augmentations as well. This augmentation applies 50% of the
-            time, and when it does it flips images right/left half the time
-            and adds a Gaussian blur with a random sigma in range 0 to 5.
+        # """Train the model.
+        # train_dataset, val_dataset: Training and validation Dataset objects.
+        # learning_rate: The learning rate to train with
+        # epochs: Number of training epochs. Note that previous training epochs
+        #         are considered to be done alreay, so this actually determines
+        #         the epochs to train in total rather than in this particaular
+        #         call.
+        # layers: Allows selecting wich layers to train. It can be:
+        #     - A regular expression to match layer names to train
+        #     - One of these predefined values:
+        #       heads: The RPN, classifier and mask heads of the network
+        #       all: All the layers
+        #       3+: Train Resnet stage 3 and up
+        #       4+: Train Resnet stage 4 and up
+        #       5+: Train Resnet stage 5 and up
+        # augmentation: Optional. An imgaug (https://github.com/aleju/imgaug)
+        #     augmentation. For example, passing imgaug.augmenters.Fliplr(0.5)
+        #     flips images right/left 50% of the time. You can pass complex
+        #     augmentations as well. This augmentation applies 50% of the
+        #     time, and when it does it flips images right/left half the time
+        #     and adds a Gaussian blur with a random sigma in range 0 to 5.
 
-                augmentation = imgaug.augmenters.Sometimes(0.5, [
-                    imgaug.augmenters.Fliplr(0.5),
-                    imgaug.augmenters.GaussianBlur(sigma=(0.0, 5.0))
-                ])
-	    custom_callbacks: Optional. Add custom callbacks to be called
-	        with the keras fit_generator method. Must be list of type keras.callbacks.
-        no_augmentation_sources: Optional. List of sources to exclude for
-            augmentation. A source is string that identifies a dataset and is
-            defined in the Dataset class.
-        """
+        #         augmentation = imgaug.augmenters.Sometimes(0.5, [
+        #             imgaug.augmenters.Fliplr(0.5),
+        #             imgaug.augmenters.GaussianBlur(sigma=(0.0, 5.0))
+        #         ])
+	    # custom_callbacks: Optional. Add custom callbacks to be called
+	    #     with the keras fit_generator method. Must be list of type keras.callbacks.
+        # no_augmentation_sources: Optional. List of sources to exclude for
+        #     augmentation. A source is string that identifies a dataset and is
+        #     defined in the Dataset class.
+        # """
         assert self.mode == "training", "Create model in training mode."
 
         # Pre-defined layer regular expressions
@@ -413,7 +413,7 @@ class MaskRCNN():
             "4+": r"(res4.*)|(bn4.*)|(res5.*)|(bn5.*)|(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)",
             "5+": r"(res5.*)|(bn5.*)|(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)",
             # All layers
-            "all": ".*",
+            "all": ".*"
         }
         if layers in layer_regex.keys():
             layers = layer_regex[layers]
@@ -435,7 +435,7 @@ class MaskRCNN():
             keras.callbacks.TensorBoard(log_dir=self.log_dir,
                                         histogram_freq=0, write_graph=True, write_images=False),
             keras.callbacks.ModelCheckpoint(self.checkpoint_path,
-                                            verbose=1, save_weights_only=True),
+                                            verbose=1, save_weights_only=True)
         ]
 
         # Add custom callbacks to the list
@@ -483,58 +483,54 @@ warnings.filterwarnings("ignore")
             layers = 'heads',
             augmentation = None)  """
 #history = model.keras_model.history.history
-"""%cd ..
-model.keras_model.save_weights('modelHead.h5')
-pickle.dump(history, open('modelHead.pkl', 'ab'))
-#model.load_weights('/kaggle/input/head-saved-weights/modelHead.h5')
-#now with all layers and augmentation included 2 more epochs
-"""
+# """%cd ..
+# model.keras_model.save_weights('modelHead.h5')
+# pickle.dump(history, open('modelHead.pkl', 'ab'))
+# #model.load_weights('/kaggle/input/head-saved-weights/modelHead.h5')
+# #now with all layers and augmentation included 2 more epochs
+# """
 model.train(dataset_train, dataset_val,
             learning_rate = LEARNING_RATE,
             epochs = EPOCHS[1],
             layers = 'all',
             augmentation = augmentation)
-            """
-#load history
-#history = pickle.load(open('/kaggle/input/head-saved-weights/modelHead.pkl', 'rb'))
-"""
+
+# load history
+# history = pickle.load(open('/kaggle/input/head-saved-weights/modelHead.pkl', 'rb'))
+
 new_history = model.keras_model.history.history
 for k in new_history: history[k] = history[k] + new_history[k]
-"""
-"""
 model.keras_model.save_weights('modelAll1.h5')
 pickle.dump(history, open('modelAll1.pkl', 'ab'))
 #decrease learning rate and train for 2 more epochs
-"""model.train(dataset_train, dataset_val,
-            learning_rate = LEARNING_RATE/5,
-            epochs = EPOCHS[2],
-            layers = 'all',
-            augmentation = augmentation)"""
-"""new_history = model.keras_model.history.history
-for k in new_history: history[k] = history[k] + new_history[k]"""
-"""%cd ..
-model.keras_model.save_weights('modelAll2.h5')
-pickle.dump(history, open('modelAll2.pkl', 'ab'))
-#the last three epochs train with LR = 1e-4
-"""
+# model.train(dataset_train, dataset_val,
+#             learning_rate = LEARNING_RATE/5,
+#             epochs = EPOCHS[2],
+#             layers = 'all',
+#             augmentation = augmentation)"""
+# new_history = model.keras_model.history.history
+# for k in new_history: history[k] = history[k] + new_history[k]"""
+
+# model.keras_model.save_weights('modelAll2.h5')
+# pickle.dump(history, open('modelAll2.pkl', 'ab'))
+# #the last three epochs train with LR = 1e-4
+
 model.train(dataset_train, dataset_val,
             learning_rate = LEARNING_RATE_TUNE,
             epochs = EPOCHS[3],
             layers = 'all',
             augmentation = augmentation)
-"""
-"""
+
 new_history = model.keras_model.history.history
 for k in new_history: history[k] = history[k] + new_history[k]
-"""
-"""
+
 model.keras_model.save_weights('modelAll3.h5')
 pickle.dump(history, open('modelAll3.pkl', 'wb'))
-"""
-history = pickle.load(open('/kaggle/input/head-saved-weights/modelAll3.pkl', 'rb'))
-epochs = range(1, len(next(iter(history.values())))+1) #get number of epochs
-history_data = pd.DataFrame(history, index=epochs)
-"""
+# """
+# history = pickle.load(open('/kaggle/input/head-saved-weights/modelAll3.pkl', 'rb'))
+# epochs = range(1, len(next(iter(history.values())))+1) #get number of epochs
+# history_data = pd.DataFrame(history, index=epochs)
+# """
 history_data.to_csv('History data from Mask_RCNN training' + '.csv')
 history_data
 plt.figure(figsize=(40,8))
@@ -618,39 +614,39 @@ def resize_image(image_path):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = cv2.resize(img, (IMAGE_SIZE, IMAGE_SIZE), interpolation = cv2.INTER_AREA)  
     return img
-"""%%time
-submission_list = []
-missing_count = 0
+# """%%time
+# submission_list = []
+# missing_count = 0
 
-for i, row in tqdm(sample_data.iterrows(), total = len(sample_data)):
-    image = resize_image(str(dataDir + '/test/' + row['ImageId']) + '.jpg')
-    result = model.detect([image])[0]
-    if result['masks'].size > 0:
-        masks, _ = fix_masks(result['masks'], result['rois'])
-        for m in range(masks.shape[-1]):
-            mask = masks[:, :, m].ravel(order = 'F')
-            rle = to_rle(mask)
-            label = result['class_ids'][m] - 1
-            submission_list.append([row['ImageId'], ' '.join(list(map(str, rle))), label, np.NaN])
-    else:
-        # The system does not allow missing ids
-        submission_list.append([row['ImageId'], '1 1', 23, np.NaN])
-        missing_count += 1
-    """
-"""validation_pred_df = pd.DataFrame(submission_list)
-validation_pred_df.columns = ['ImageId', 'EncodedPixels', 'ClassId']
-validation_pred_df = validation_pred_df.groupby('ImageId')['EncodedPixels', 'ClassId'].agg(lambda x: list(x))
+# for i, row in tqdm(sample_data.iterrows(), total = len(sample_data)):
+#     image = resize_image(str(dataDir + '/test/' + row['ImageId']) + '.jpg')
+#     result = model.detect([image])[0]
+#     if result['masks'].size > 0:
+#         masks, _ = fix_masks(result['masks'], result['rois'])
+#         for m in range(masks.shape[-1]):
+#             mask = masks[:, :, m].ravel(order = 'F')
+#             rle = to_rle(mask)
+#             label = result['class_ids'][m] - 1
+#             submission_list.append([row['ImageId'], ' '.join(list(map(str, rle))), label, np.NaN])
+#     else:
+#         # The system does not allow missing ids
+#         submission_list.append([row['ImageId'], '1 1', 23, np.NaN])
+#         missing_count += 1
+#     """
+# """validation_pred_df = pd.DataFrame(submission_list)
+# validation_pred_df.columns = ['ImageId', 'EncodedPixels', 'ClassId']
+# validation_pred_df = validation_pred_df.groupby('ImageId')['EncodedPixels', 'ClassId'].agg(lambda x: list(x))
 
-ImageId = pd.Series(validation_pred_df.index)
-validation_pred_df.index = pd.Index(list(range(len(validation_pred_df))))
-validation_pred_df['ImageId'] = ImageId
+# ImageId = pd.Series(validation_pred_df.index)
+# validation_pred_df.index = pd.Index(list(range(len(validation_pred_df))))
+# validation_pred_df['ImageId'] = ImageId
 
-validation_pred_df"""
-#sample_submission.columns
-"""submission_data = pd.DataFrame(submission_list, columns=sample_submission.columns.values)
-print("Total image results: ", submission_data['ImageId'].nunique())
-print("Missing Images: ", missing_count)
-submission_data.head()"""
+# validation_pred_df"""
+# #sample_submission.columns
+# """submission_data = pd.DataFrame(submission_list, columns=sample_submission.columns.values)
+# print("Total image results: ", submission_data['ImageId'].nunique())
+# print("Missing Images: ", missing_count)
+# submission_data.head()"""
 #submission_data.to_csv('submission.csv', index=False)
 submission_raw = pd.read_csv("/kaggle/input/submissionraw/submission_non_grouped.csv")
 submission_raw.head()
