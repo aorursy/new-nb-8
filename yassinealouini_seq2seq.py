@@ -402,7 +402,6 @@ def train_model(model, batch_size=BATCH_SIZE, epochs=EPOCHS):
     checkpoint = tf.keras.callbacks.ModelCheckpoint("model.h5")
 
     print(encoder_input_data.shape)
-    %pdb
     history = model.fit([encoder_input_data, _location_s], decoder_target_data,
                         batch_size=BATCH_SIZE,
                         epochs=EPOCHS),

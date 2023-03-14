@@ -39,7 +39,7 @@ if not USE_COLAB:
 
     PATH = '../input/plant-pathology-2020-fgvc7/'
 
-    SAVE_PATH = './'  # 模型要保存到的路径
+    SAVE_PATH = './' 
 
 else:
 
@@ -53,11 +53,7 @@ else:
 
     SAVE_PATH = PATH
 
-    !git clone -q https://github.com/welkin-feng/ComputerVision.git
-
     sys.path.append('./ComputerVision/')
-
-    !git clone -q https://github.com/rwightman/pytorch-image-models.git
 
     sys.path.append('./pytorch-image-models/')
 

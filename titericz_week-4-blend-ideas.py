@@ -44,10 +44,6 @@ def BLEND_WEEK4_1():
 
     import matplotlib.pyplot as plt
 
-    %matplotlib inline
-
-
-
     from scipy.signal import savgol_filter
 
     from sklearn.preprocessing import StandardScaler, OneHotEncoder
@@ -1656,12 +1652,6 @@ def BLEND_WEEK4_2():
 
     from scipy.optimize import curve_fit
 
-
-
-    %matplotlib inline
-
-    %config InlineBackend.figure_format = 'retina'
-
     import matplotlib.pyplot as plt
 
 
@@ -2726,12 +2716,6 @@ def model_simple_decay():
     import numpy as np
 
     from scipy.optimize import curve_fit
-
-
-
-    %matplotlib inline
-
-    %config InlineBackend.figure_format = 'retina'
 
     import matplotlib.pyplot as plt
 

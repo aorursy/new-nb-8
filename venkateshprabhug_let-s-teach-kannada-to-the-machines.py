@@ -123,8 +123,6 @@ for k, v in classifiers.items():
 
     print(f"{k}")
 
-    %time models[k] = v.fit(x_train, y_train)
-
     val_preds[k] = models[k].predict(x_val)
 
     test_preds[k] = models[k].predict(x_test)

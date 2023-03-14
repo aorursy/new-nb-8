@@ -607,9 +607,6 @@ for model in arch:
     if submit_after_train:
 
         print("Submitting to Kaggle\n")
-
-        !kaggle competitions submit -c siim-isic-melanoma-classification -f 'submission_v{submission_ver}.csv' -m 'Md: {model_name}, Fd: {n_folds}, Bs: {bs}, Sz: {size[0]}, Os: {oversampling_flag}, TTa: {use_tta}'
-
         print(' \n\n\n\n')
 
     

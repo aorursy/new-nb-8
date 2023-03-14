@@ -131,8 +131,6 @@ for i in range(10):
 
     m = RandomForestRegressor(n_estimators=40, min_samples_leaf=1, max_features=0.9, n_jobs=-1, oob_score=True)
 
-    %time m.fit(X_train, y_train)
-
     print_score(m)
 
     pred_test_all.append(m.predict(x_test))

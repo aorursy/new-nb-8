@@ -761,8 +761,6 @@ def compile_predict_GRU(train_input,test_input,y_train,variable_list,drop_list):
 
 def get_tensorboard_ready():
 
-    ! rm -rf ./logs/ 
-
     logdir = os.path.join("logs", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
 
     #logdir = ""

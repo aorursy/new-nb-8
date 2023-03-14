@@ -488,16 +488,20 @@ model.keras_model.save_weights('modelHead.h5')
 pickle.dump(history, open('modelHead.pkl', 'ab'))
 #model.load_weights('/kaggle/input/head-saved-weights/modelHead.h5')
 #now with all layers and augmentation included 2 more epochs
-"""model.train(dataset_train, dataset_val,
+"""
+model.train(dataset_train, dataset_val,
             learning_rate = LEARNING_RATE,
             epochs = EPOCHS[1],
             layers = 'all',
-            augmentation = augmentation)"""
+            augmentation = augmentation)
+            """
 #load history
 #history = pickle.load(open('/kaggle/input/head-saved-weights/modelHead.pkl', 'rb'))
-"""new_history = model.keras_model.history.history
-for k in new_history: history[k] = history[k] + new_history[k]"""
-"""%cd ..
+"""
+new_history = model.keras_model.history.history
+for k in new_history: history[k] = history[k] + new_history[k]
+"""
+"""
 model.keras_model.save_weights('modelAll1.h5')
 pickle.dump(history, open('modelAll1.pkl', 'ab'))
 #decrease learning rate and train for 2 more epochs
@@ -512,19 +516,25 @@ for k in new_history: history[k] = history[k] + new_history[k]"""
 model.keras_model.save_weights('modelAll2.h5')
 pickle.dump(history, open('modelAll2.pkl', 'ab'))
 #the last three epochs train with LR = 1e-4
-"""model.train(dataset_train, dataset_val,
+"""
+model.train(dataset_train, dataset_val,
             learning_rate = LEARNING_RATE_TUNE,
             epochs = EPOCHS[3],
             layers = 'all',
-            augmentation = augmentation)"""
-"""new_history = model.keras_model.history.history
-for k in new_history: history[k] = history[k] + new_history[k]"""
-"""model.keras_model.save_weights('modelAll3.h5')
-pickle.dump(history, open('modelAll3.pkl', 'wb'))"""
+            augmentation = augmentation)
+"""
+"""
+new_history = model.keras_model.history.history
+for k in new_history: history[k] = history[k] + new_history[k]
+"""
+"""
+model.keras_model.save_weights('modelAll3.h5')
+pickle.dump(history, open('modelAll3.pkl', 'wb'))
+"""
 history = pickle.load(open('/kaggle/input/head-saved-weights/modelAll3.pkl', 'rb'))
 epochs = range(1, len(next(iter(history.values())))+1) #get number of epochs
 history_data = pd.DataFrame(history, index=epochs)
-"""%cd ..
+"""
 history_data.to_csv('History data from Mask_RCNN training' + '.csv')
 history_data
 plt.figure(figsize=(40,8))

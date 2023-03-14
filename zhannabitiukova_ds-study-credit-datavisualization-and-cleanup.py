@@ -21,9 +21,6 @@ try:
     import seaborn as sns
 
 except:
-
-    !pip install seaborn
-
     import seaborn as sns
 
 sns.set_style('whitegrid')

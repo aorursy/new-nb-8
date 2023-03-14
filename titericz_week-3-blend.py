@@ -44,8 +44,6 @@ def BLEND_WEEK4_1():
 
     import matplotlib.pyplot as plt
 
-    %matplotlib inline
-
 
 
     from scipy.signal import savgol_filter
@@ -1655,12 +1653,6 @@ def BLEND_WEEK4_2():
     import numpy as np
 
     from scipy.optimize import curve_fit
-
-
-
-    %matplotlib inline
-
-    %config InlineBackend.figure_format = 'retina'
 
     import matplotlib.pyplot as plt
 

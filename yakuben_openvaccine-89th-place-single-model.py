@@ -353,7 +353,6 @@ def remove_useless_checkpoints(path, usefull_checkpoint):
     for el in listdir(path):
         if el != usefull_checkpoint:
             print(f'rm {path}/{el}')
-            !rm '{path}/{el}'
 import torch
 from torch.utils.data import DataLoader
 from catalyst.dl import SupervisedRunner, Runner

@@ -185,8 +185,6 @@ if submit:
 
     print('fit')
 
-    %timeit clf.fit(X, np.log1p(y))
-
 else:
 
     print('train_test_split')
@@ -194,8 +192,6 @@ else:
     X_train, X_test, y_train, a = train_test_split(X, y, test_size=0.2)
 
     print('fit')
-
-    %timeit clf.fit(X_train, np.log1p(y_train))
 
     print('predict')
 

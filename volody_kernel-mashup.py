@@ -970,8 +970,6 @@ def model_select(name, weights = 'imagenet'):
 
         except ImportError:
 
-            !pip install -q efficientnet
-
             import efficientnet.tfkeras as efn
 
         pretrained_model = efn.EfficientNetB7(
@@ -1333,7 +1331,7 @@ def train_cross_validate_predict(filenames):
 
         # run fit
 
-        print_and_log(f'# FOLD: {ifold+1} {steps_per_epoch}');
+        print_and_log(f'# FOLD: {ifold+1} {steps_per_epoch}')
 
         # Recreate the exact same model purely from the file
 

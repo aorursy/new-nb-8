@@ -15,7 +15,6 @@ for dirname, _, filenames in os.walk('/kaggle/input'):
 
 # You can write up to 5GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using "Save & Run All" 
 # You can also write temporary files to /kaggle/temp/, but they won't be saved outside of the current session
- ! ls '../input/dogs-vs-cats/'
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 from keras.preprocessing.image import ImageDataGenerator, load_img
